@@ -1,0 +1,97 @@
+.header {
+    height: 10vh;
+    background-color: #E07A5F;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden; /* Pour éviter que les éléments ne dépassent les bords */
+}
+/*DIV*/
+.headerSite {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+.headerSiteName {
+    text-decoration: none;
+    color: black;
+    margin-left: 10px;
+}
+.headerLogo {
+    height: 40px;
+}
+.searchBox {
+    flex-grow: 1;
+    margin: 0 auto; /* Centrer la barre de recherche */
+}
+.searchInput {
+    width: 25%; /* Réduire la largeur de la barre de recherche à 50% */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+}
+.basketUserContainer {
+    display: flex; /* Utiliser flexbox pour aligner les éléments horizontalement */
+    align-items: center; /* Centrer verticalement les éléments dans le conteneur */
+}
+/*BasketUser*/
+.basketImg {
+    width: 20px;
+    height: 20px;
+}
+.headerUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.loupeImg{
+    width: 20px;
+    height: 20px;
+    margin-left: 20%;
+}
+
+.headerUserFun {
+    margin: auto;
+    margin-left: 10px;
+}
+
+.bar {
+    width: 25px;
+    height: 2px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.change1 {
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.change2 {
+    opacity: 0;
+}
+
+.change3 {
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
+
+@media only screen and (max-width: 768px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .headerSiteName {
+        display: none; 
+    }
+
+    .headerUser {
+        display: none;
+    }
+}

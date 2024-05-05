@@ -1,0 +1,31 @@
+/* Within product.css */
+.product {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center items horizontally */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.productImg {
+    margin-bottom: 10px; /* Add some space between image and details */
+}
+
+.productImg img {
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.productDetails {
+    text-align: center; /* Center text within details */
+}
+
+.productDetails p {
+    margin: 5px 0;
+}
+
+.cartButton {
+    border-radius: 25%;
+}

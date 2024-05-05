@@ -1,0 +1,132 @@
+/* Reset des marges et des paddings par défaut */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Définition des variables de couleur */
+:root {
+    --color0: #F4F1DE;
+    --color1: #E07A5F;
+    --color2: #3D405B;
+    --color3: #81B29A;
+    --color4: #F2CC8F;
+}
+
+/* Styles globaux */
+body {
+    font-family: Cambria, sans-serif;
+    overflow-x: hidden; /* Empêche le défilement horizontal */
+    
+}
+
+.appDiv{
+    background-color: #81B29A;
+}
+
+/* Left Menu */
+.leftMenu {
+    min-height: calc(90vh - 10vh);
+    background-color: var(--color3);
+    font-family: Cambria, sans-serif;
+    float: left;
+}
+
+.leftMenuLink {
+    text-decoration: none;
+    color: black;
+}
+
+.leftMenuHide{
+    display: none;
+}
+
+.menuToggle {
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
+
+/* Main Content */
+.mainContent {
+    background-color: var(--color0);
+    min-height: calc(90vh - 10vh); /* Utilisation de calc pour calculer la hauteur minimale de la zone principale */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color2);
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.footerAbout {
+    color: var(--color0);
+    display: inline-block;
+    margin-left: 25px;
+}
+
+.footerLogo {
+    height: 40px;
+}
+
+/* Product */
+.product {
+    display: flex;
+    justify-content: space-between;
+}
+
+.productImg {
+    max-width: 100%;
+}
+
+.productContent {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+/* Media Queries pour la responsivité */
+@media only screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .headerNavBar {
+        margin: 10px 0;
+    }
+
+    .mainContent {
+        height: auto;
+        min-height: calc(90vh - 10vh); 
+        position: relative;
+    }
+
+    .footer {
+       
+        align-items: center;
+    }
+
+    .leftMenu {
+        min-height: calc(90vh - 10vh);
+        width: 80%;
+        position: absolute;
+        float:left; 
+        z-index:100;
+        filter:alpha(opacity=75); /* opacite pour FF */ 
+        -moz-opacity:0.75; /* opacite pour FF */ 
+        opacity: 0.75; /* opacite pour IE */
+
+    }
+}
