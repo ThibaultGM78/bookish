@@ -123,6 +123,48 @@ app.get('/getListElement', (req, res) => {
    
 });
 
+app.get('/getConnexion', (req, res) => {
+    var { email, password } = req.query;
+
+    var sql = "SELECT * FROM bookish_user WHERE user_email = ? AND user_password = ?";
+    db.query(sql, [email, password], (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        if (data.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json(data);
+    });
+});
+
+
+app.get('/signUp', (req, res) => {
+    var { email, password, name } = req.query;
+
+    // Vérifier si un utilisateur avec le même nom existe déjà
+    var sqlCheckName = "SELECT * FROM bookish_user WHERE user_name = ? OR user_email = ?";
+    db.query(sqlCheckName, [name, email], (err, nameData) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        if (nameData.length > 0) {
+            return res.json({ success: false, message: 'User with the same name already exists' });
+        }
+
+        // Si aucun utilisateur avec le même nom n'existe, insérer les données
+        var sqlInsert = "INSERT INTO bookish_user (user_name, user_email, user_password) VALUES (?, ?, ?)";
+        db.query(sqlInsert, [name, email, password], (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+            res.json({ success: true, message: 'User created successfully' });
+        });
+    });
+});
+    
+
+
 app.listen(8081, () => {
     console.log("listening");
 })

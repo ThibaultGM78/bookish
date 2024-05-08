@@ -58,7 +58,22 @@ function App() {
         changeMainContent(<Category category={category} search={search} author={author} sort={newSort} changeMain={changeMainToProduct}/>)
     };
 
-    
+    //user
+    const changeUser = (newUser) => {
+        changeMainContent(<Accueil/>);
+        setUser(newUser);
+    };
+    const logoutUser = () => {
+        setUser('');
+    };
+
+    //Page
+    const changeMainToConnexion = () => {
+        changeMainContent(<Connexion changeUser={changeUser} changeMainToSignUp={changeMainToSignUp} changeMain={changeMainContent}/>);
+    };
+    const  changeMainToSignUp = () => {
+        changeMainContent(<SignUpForm changeMainToConnexion={changeMainToConnexion}/>);
+    };
     const changeMainToProduct = (product,userFilter) => {
         changeMainContent(<Product product={product} cart={cart} changeMain={changeProductToCatalog} userFilter={userFilter}/>);
     }
@@ -70,19 +85,22 @@ function App() {
     const goToCatalog = () => {
         changeMainContent(<Category category={category} search={search} author={author} sort={sort} changeMain={changeMainToProduct}/>);
     }
+
+
+
+
    
-    
     return (
         <div className="appDiv">
-            <Header changeSearch={changeSearch} user={user} 
-             leftMenuVisible={leftMenuVisible} toggleLeftMenu={toggleLeftMenu}
-            goToCatalog={goToCatalog} 
+            <Header changeSearch={changeSearch} changeMainToConnexion={changeMainToConnexion} user={user} 
+            logoutUser={logoutUser} leftMenuVisible={leftMenuVisible} toggleLeftMenu={toggleLeftMenu}
+            goToCatalog={goToCatalog}
             />
             <div style={{ display: leftMenuVisible ? 'block' : 'none' }}>
                 <LeftMenu changeCategory={changeCategory} changeAuthor={changeAuthor} changeSort={changeSort}/>
             </div>
             <div className="mainContent">
-                {mainContent ? mainContent : <Accueil/>}
+                {mainContent ? mainContent : <Accueil handleViewMore={changeMainToProduct}/>}
             </div>
             <Footer changeMain={changeMainContent}/>
         </div>
