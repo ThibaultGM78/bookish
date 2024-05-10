@@ -1,0 +1,17 @@
+.cartImgProduct{
+    margin: 5px;
+}
+
+td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cartColumn{
+    margin: 20px;
+}
+
+.tableau{
+    border-radius: 5%;
+    background-color:#81B29A;
+}
