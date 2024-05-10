@@ -77,7 +77,9 @@ function App() {
     const changeMainToProduct = (product,userFilter) => {
         changeMainContent(<Product product={product} cart={cart} changeMain={changeProductToCatalog} userFilter={userFilter}/>);
     }
-  
+    const changeMainToCart = () => {
+        changeMainContent(<Cart cart={cart} changeMainToProduct={changeMainToProduct}  changeMainToConnexion={changeMainToConnexion} changeMainToPayment={changeMainToPayment} user={user}/>);
+    }
     const changeProductToCatalog = (userFilter) => {
         const userFilterJson = JSON.parse(userFilter);
         changeMainContent(<Category category={userFilterJson.category} search={userFilterJson.search} author={userFilterJson.author} sort={userFilterJson.sort} changeMain={changeMainToProduct}/>)
@@ -86,6 +88,9 @@ function App() {
         changeMainContent(<Category category={category} search={search} author={author} sort={sort} changeMain={changeMainToProduct}/>);
     }
 
+    const changeMainToAccueil = () => {
+        changeMainContent(<Accueil handleViewMore={changeMainToProduct}/>);
+    }
 
 
 
@@ -93,8 +98,8 @@ function App() {
     return (
         <div className="appDiv">
             <Header changeSearch={changeSearch} changeMainToConnexion={changeMainToConnexion} user={user} 
-            logoutUser={logoutUser} leftMenuVisible={leftMenuVisible} toggleLeftMenu={toggleLeftMenu}
-            goToCatalog={goToCatalog}
+            logoutUser={logoutUser} changeMainToCart={changeMainToCart} leftMenuVisible={leftMenuVisible} toggleLeftMenu={toggleLeftMenu}
+            goToCatalog={goToCatalog} changeMainToAccueil={changeMainToAccueil}
             />
             <div style={{ display: leftMenuVisible ? 'block' : 'none' }}>
                 <LeftMenu changeCategory={changeCategory} changeAuthor={changeAuthor} changeSort={changeSort}/>
