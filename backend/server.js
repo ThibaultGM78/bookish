@@ -162,7 +162,21 @@ app.get('/signUp', (req, res) => {
         });
     });
 });
+
+app.get('/insertContact', (req, res) => {
+    var { dateContact, name, surname, email, genre, birthday, role, subject, content} = req.query;
+    console.log("helloo");
+
+    var sqlInsert = "INSERT INTO bookish_contact (contact_date, contact_name, contact_surname, contact_email, contact_gender, contact_birthday, contact_function, contact_subject, contact_content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    db.query(sqlInsert, [dateContact, name, surname, email, genre, birthday, role, subject, content], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        res.json({ success: true, message: 'Contact etblished successfully' });
+    });
     
+});
+
 
 
 app.listen(8081, () => {
