@@ -1,0 +1,7 @@
+.noAlert {
+    display: none;
+}
+
+.alert{
+    color: red;
+}
