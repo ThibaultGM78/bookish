@@ -87,12 +87,17 @@ function App() {
     const goToCatalog = () => {
         changeMainContent(<Category category={category} search={search} author={author} sort={sort} changeMain={changeMainToProduct}/>);
     }
-
+    const changeMainToPayment = () => {
+        changeMainContent(<Payment user={user} cart={cart} paymentMade={paymentMade}/>)
+    }
     const changeMainToAccueil = () => {
         changeMainContent(<Accueil handleViewMore={changeMainToProduct}/>);
     }
 
-
+    const paymentMade = () => {
+        setCart({});
+        setMainToAccueil();
+    }
 
    
     return (
