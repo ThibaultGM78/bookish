@@ -177,11 +177,48 @@ app.get('/insertContact', (req, res) => {
     
 });
 
+app.get('/insertPayment', (req, res) => {
+    var { cart, adresse, city, code, user} = req.query;
+  
+    var total = 0;
+    cart = cart.replace(/\\/g, '');
+    const cartJson = JSON.parse(cart);
+  
+   for (var i in cartJson){
+    
+        total += cartJson[i].nElement * cartJson[i].value;
+        var sqlUpdate = "UPDATE bookish_product SET product_stock = product_stock - ? WHERE id_product = ?";
+        db.query(sqlUpdate, [cartJson[i].nElement, cartJson[i].key], (err, result) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Internal server error' });
+                }
+                // Gérer la réponse de la requête si nécessaire
+            })
+    }
+    
+    const date = new Date();
+
+    // Obtenir la date du jour
+    const day = date.getDate();
+    // Obtenir le mois (attention : les mois commencent à partir de 0)
+    const month = date.getMonth() + 1;
+    // Obtenir l'année
+    const year = date.getFullYear();
+
+    dateStr = day + "/" + month + "/" + year;
+    
+    var sqlInsert = "INSERT INTO bookish_payment(id_user, payment_date, payment_adresse, payment_city, payment_code, payment_total, payment_cart)"
+    + "VALUES (" + user + ",'" + dateStr +"','" + adresse + "','" + city +"','" + code + "'," + total + ",'" + cart + "')";
+    db.query(sqlInsert, [], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error caca' });
+        }
+        res.json({ success: true, message: 'Contact etblished successfully' });
+    });
+    
+});
 
 
 app.listen(8081, () => {
     console.log("listening");
 })
-
-
-
