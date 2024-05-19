@@ -47,6 +47,7 @@ class Payment extends Component {
                         throw new Error('Invalid credentials');
                     }        
 
+                    console.log("COUCOU");
                     this.props.paymentMade();         
                     
                 })

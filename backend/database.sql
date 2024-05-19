@@ -104,6 +104,7 @@ VALUES
 ('Annabel Lee', 'Edgar Allan Poe', 5.99, 'Poetry', 110, 'A poem that tells the story of a man who falls in love with a woman named Annabel Lee when they are both young, but their love is cut short by her untimely death.', 'http://books.google.com/books/content?id=imnqDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api');
 
 INSERT INTO bookish_user (user_name,user_email,user_password) VALUES
+('Admin', 'admin@bookish.com', '0000'),
 ('Azek','azek@gmail.com','sasa');
 
     

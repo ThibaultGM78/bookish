@@ -39,6 +39,9 @@ class Product extends React.Component {
 
     render() {
         const product = this.props.product;
+        const user = this.props.user;
+
+        console.log("user: " + user + " / " + this.props.user);
         
         return (
             <div>
@@ -57,7 +60,7 @@ class Product extends React.Component {
                             <p><strong>Auteur:</strong> {product.product_author}</p>
                             <p><strong>Prix:</strong> {product.product_price} €</p>
                             <p><strong>Catégorie:</strong> {product.product_category}</p>
-                            <p><strong>Stock:</strong> {product.product_stock}</p>
+                            {this.props.user.user_name == 'Admin' && <p><strong>Stock:</strong> {product.product_stock}</p>}
                             <p><strong>Description:</strong> {product.product_desc}</p>
                             <div className="quantityControl">
                                 <button onClick={this.removeFromCart} className="cartButton">-</button>

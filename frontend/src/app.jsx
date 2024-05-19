@@ -12,6 +12,7 @@ import SignUpForm from "./module/signUpForm";
 import Product from "./module/product";
 import Cart from "./module/cart";
 import Payment from "./module/Payment";
+import AddProduct from "./module/addProduct";
 
 function App() {
     const [leftMenuVisible, setLeftMenuVisible] = useState(false); 
@@ -60,9 +61,20 @@ function App() {
 
     //user
     const changeUser = (newUser) => {
-        changeMainContent(<Accueil/>);
+    
         setUser(newUser);
+        changeMainContent(<Accueil handleViewMore={
+            (product,userFilter) => {
+            console.log("AppUser: " + newUser.user_name);
+        
+            changeMainContent(<Product product={product} cart={cart} changeMain={changeProductToCatalog} userFilter={userFilter} user={newUser}/>)
+            }
+        }
+        />);
+        
     };
+    
+    
     const logoutUser = () => {
         setUser('');
     };
@@ -75,9 +87,11 @@ function App() {
         changeMainContent(<SignUpForm changeMainToConnexion={changeMainToConnexion}/>);
     };
     const changeMainToProduct = (product,userFilter) => {
-        changeMainContent(<Product product={product} cart={cart} changeMain={changeProductToCatalog} userFilter={userFilter}/>);
+        console.log("AppUser: " + user.user_name);
+        changeMainContent(<Product product={product} cart={cart} changeMain={changeProductToCatalog} userFilter={userFilter} user={user}/>);
     }
     const changeMainToCart = () => {
+        console.log("AppUser: " + user.user_name);
         changeMainContent(<Cart cart={cart} changeMainToProduct={changeMainToProduct}  changeMainToConnexion={changeMainToConnexion} changeMainToPayment={changeMainToPayment} user={user}/>);
     }
     const changeProductToCatalog = (userFilter) => {
@@ -94,9 +108,13 @@ function App() {
         changeMainContent(<Accueil handleViewMore={changeMainToProduct}/>);
     }
 
+    const changeMainToAdd = () => {
+        changeMainContent(<AddProduct changeMainToAccueil={changeMainToAccueil}/>);
+    }
+
     const paymentMade = () => {
         setCart({});
-        setMainToAccueil();
+        changeMainContent(<Accueil handleViewMore={changeMainToProduct}/>);
     }
 
    
@@ -104,7 +122,7 @@ function App() {
         <div className="appDiv">
             <Header changeSearch={changeSearch} changeMainToConnexion={changeMainToConnexion} user={user} 
             logoutUser={logoutUser} changeMainToCart={changeMainToCart} leftMenuVisible={leftMenuVisible} toggleLeftMenu={toggleLeftMenu}
-            goToCatalog={goToCatalog} changeMainToAccueil={changeMainToAccueil}
+            goToCatalog={goToCatalog} changeMainToAccueil={changeMainToAccueil}  changeMainToAdd={ changeMainToAdd}
             />
             <div style={{ display: leftMenuVisible ? 'block' : 'none' }}>
                 <LeftMenu changeCategory={changeCategory} changeAuthor={changeAuthor} changeSort={changeSort}/>

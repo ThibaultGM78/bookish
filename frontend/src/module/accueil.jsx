@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/accueil.css";
+import { URL_API } from '../constantes';
 
 class Accueil extends React.Component{
 
@@ -27,7 +28,34 @@ class Accueil extends React.Component{
     }
 
     handleViewMore = () => {
-        this.props.handleViewMore(this.state.products[this.state.i]);
+
+        let url = `${URL_API}getProductStock?id=` + this.state.products[this.state.i].id_product;
+        console.log(url); 
+        
+        if (url) {
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Failed to connect');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    
+                    if (!data) {
+                        throw new Error('Invalid credentials');
+                    }        
+
+                    this.state.products[this.state.i].product_stock = data[0].product_stock;
+                    this.props.handleViewMore(this.state.products[this.state.i]);
+                           
+                })
+                .catch(error => {
+                    this.setState({ isCorrect: false});
+                    
+                })
+        }
+       
     }
 
     render(){

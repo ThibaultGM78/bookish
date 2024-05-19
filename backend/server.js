@@ -1,6 +1,7 @@
 const express = require('express')
 const mysql = require('mysql')
 const cors = require('cors')
+const fs = require('fs');
 
 const app = express()
 app.use(cors());
@@ -211,14 +212,113 @@ app.get('/insertPayment', (req, res) => {
     + "VALUES (" + user + ",'" + dateStr +"','" + adresse + "','" + city +"','" + code + "'," + total + ",'" + cart + "')";
     db.query(sqlInsert, [], (err, result) => {
         if (err) {
-            return res.status(500).json({ error: 'Internal server error caca' });
+            return res.status(500).json({ error: 'Internal server error' });
         }
         res.json({ success: true, message: 'Contact etblished successfully' });
     });
     
 });
 
+app.get('/getProduct', (req, res) => {
+
+    var { id } = req.query;
+    
+    var sql = "SELECT * FROM bookish_product WHERE id_product = ?"
+
+    console.log(sql);
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        if (data.length === 0) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        return res.json(data);
+    });
+   
+});
+
+app.get('/getProductStock', (req, res) => {
+
+    var { id } = req.query;
+    
+    var sql = "SELECT product_stock FROM bookish_product WHERE id_product = ?"
+
+    console.log(sql);
+    db.query(sql, [id], (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        if (data.length === 0) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        return res.json(data);
+    });
+   
+});
+
+/*app.get('/addProduct', (req, res) => {
+    var { name, author, price, category, stock, desc, img } = req.query;
+
+    function createImageFromBase64(img) {
+        var img = new Image();
+        img.src = 'data:image/jpeg;base64,' + base64String;
+        return img;
+    }
+
+    const imageName = name + ".jpg";
+    const imagePath = "./" + imageName;
+    
+ 
+    var sqlInsert = "INSERT INTO bookish_product (product_name, product_author, product_price, product_category, product_stock, product_desc, product_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    var values = [name, author, price, category, stock, desc, "src/img/" + name + ".jpg"];
+
+    db.query(sqlInsert, values, (err, result) => {
+        if (err) {
+            console.error('Erreur SQL :', err);
+            return res.status(500).json({ error: 'Internal server error', details: err.message });
+        }
+        res.json({ success: true, message: 'Product created successfully' });
+    });
+});*/
+
+
+app.get('/addProduct', (req, res) => {
+    var { name, author, price, category, stock, desc, img } = req.query;
+
+    imgCode = img.replaceAll(" ", "+");
+
+    const imageName = name + ".jpg";
+    const imagePath = "../frontend/src/img/prod/" + imageName;
+    
+    const buffer = Buffer.from(imgCode.substring(0, imgCode.length - 3), "base64");
+    fs.writeFile(imagePath, buffer, (err) => {
+        if (err) {
+            console.error("Error writing file:", err);
+        } else {
+            console.log("File written successfully!");
+        }
+    });
+
+    var sqlInsert = "INSERT INTO bookish_product (product_name, product_author, product_price, product_category, product_stock, product_desc, product_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    var values = [name, author, price, category, stock, desc, "src/img/prod/" + imageName];
+
+    db.query(sqlInsert, values, (err, result) => {
+        if (err) {
+            console.error('Erreur SQL :', err);
+            return res.status(500).json({ error: 'Internal server error', details: err.message });
+        }
+        res.json({ success: true, message: 'Product created successfully ' + imgCode});
+    });
+    
+});
+
+
+
 
 app.listen(8081, () => {
     console.log("listening");
 })
+
+
+
