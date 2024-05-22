@@ -11,3 +11,6 @@ write "npm start" in the backend folder terminal,
 write "npm run dev" in the frontend folder terminal
 
 Dont forget to host the database. The creation script can be find in the backend folder
+
+--
+Admin account: mail -> admin@bookish.com, password -> 0000
